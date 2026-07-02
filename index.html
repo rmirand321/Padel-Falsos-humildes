@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liga Padel 2026</title>
+<script id="d">var D={"0":{"sets":[{"a":"3","b":"6"},{"a":"6","b":"4"},{"a":"2","b":"6"}],"winner":"Tana y Yeri","mvp":"yeri","played":true},"1":{"sets":[{"a":"6","b":"2"},{"a":"1","b":"6"},{"a":"3","b":"6"}],"winner":"Tana y Yeri","mvp":"tana","played":true},"2":{"sets":[{"a":"","b":""},{"a":"","b":""},{"a":"","b":""}],"winner":"","mvp":"","played":false}};</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#e9c46a;--white:#f8f9fa;--gray:#6c757d;--gray2:#adb5bd;
+  --bg:#0f1b0f;--card:#162116;--border:#2a3d2a;--red:#e63946;--green:#52b788;--courtl:#2d6a4f}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;padding:18px 14px 50px}
+header{text-align:center;margin-bottom:24px}
+.title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,8vw,3.4rem);letter-spacing:.08em;color:var(--gold);line-height:1}
+.subtitle{font-size:.72rem;color:var(--gray);letter-spacing:.14em;text-transform:uppercase;margin-top:4px}
+.net{display:flex;align-items:center;gap:8px;margin:14px auto 0;max-width:260px}
+.net-line{flex:1;height:1px;background:var(--border)}
+.net-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
+.players{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.pbadge{display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.pdot{width:8px;height:8px;border-radius:50%}
+.scoreboard{max-width:600px;margin:0 auto 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.sb-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;text-align:center}
+.sb-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px}
+.sb-player{text-align:center}
+.sb-name{font-size:.62rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gray2);margin-bottom:3px}
+.sb-wins{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1}
+.sb-sub{font-size:.57rem;color:var(--gray);margin-top:1px}
+.sb-row{font-size:.57rem;margin-top:4px;color:var(--gray2)}
+.sb-row span{font-weight:700}
+.sb-gf{color:var(--green)}.sb-ga{color:var(--red)}.sb-diff{color:var(--gold)}
+.sb-mvp{font-size:.57rem;margin-top:2px}
+.cycle-banner{max-width:600px;margin:0 auto 8px;background:rgba(233,196,106,.08);border:1px solid rgba(233,196,106,.3);border-radius:8px;padding:8px 14px;text-align:center}
+.cb-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold)}
+.cb-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);margin-top:1px;letter-spacing:.05em}
+.cb-detail{font-size:.62rem;color:var(--gray2);margin-top:1px}
+.rules-toggle{text-align:center;margin:10px auto 18px;max-width:600px}
+.rules-btn{background:transparent;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:.68rem;color:var(--gray);cursor:pointer;letter-spacing:.07em;text-transform:uppercase}
+.rules-box{display:none;max-width:600px;margin:0 auto 18px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:.72rem;line-height:1.6;color:var(--gray2)}
+.rules-box.show{display:block}
+.rules-box h4{color:var(--gold);font-size:.74rem;margin-bottom:5px;letter-spacing:.05em;text-transform:uppercase}
+.rules-box ul{padding-left:14px;margin-bottom:6px}
+.rules-box li{margin-bottom:2px}
+.schedule{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:7px}
+.cycle-sep{max-width:600px;margin:4px auto 0;display:flex;align-items:center;gap:8px}
+.cycle-sep-line{flex:1;height:1px;background:var(--border)}
+.cycle-sep-lbl{font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;background:var(--bg);padding:0 5px}
+.jornada{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.jornada.played{border-color:var(--courtl)}
+.jornada.played .jh{background:rgba(45,106,79,.15)}
+.jh{display:grid;grid-template-columns:68px 1fr auto;align-items:center;gap:7px;padding:11px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.jh:active{background:rgba(233,196,106,.06)}
+.jweek{display:flex;flex-direction:column;gap:1px}
+.jnum{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold);line-height:1}
+.jdate{font-size:.62rem;color:var(--gray);white-space:nowrap}
+.jrep{font-size:.56rem;color:var(--gray);margin-top:1px}
+.jmatch{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.pn{font-weight:600;font-size:.74rem;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.pn.rayco{background:#1d3557;color:#a8d8ea}
+.pn.nico{background:#2d1b4e;color:#c9b1ff}
+.pn.tana{background:#4a1a1a;color:#ffb4a2}
+.pn.yeri{background:#1a3a1a;color:#95d5b2}
+.vs{font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:var(--gold);background:rgba(233,196,106,.1);border:1px solid rgba(233,196,106,.22);border-radius:3px;padding:2px 5px}
+.jstatus{display:flex;flex-direction:column;align-items:center;gap:2px}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--border)}
+.jornada.played .sdot{background:var(--green)}
+.chev{font-size:.75rem;color:var(--gray);transition:transform .22s;display:inline-block}
+.jornada.open .chev{transform:rotate(180deg)}
+.jpanel{display:none;border-top:1px solid var(--border);padding:14px}
+.jornada.open .jpanel{display:block}
+.wbanner{display:none;background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.3);border-radius:6px;padding:7px 12px;text-align:center;margin-bottom:10px}
+.wbanner.show{display:block}
+.wblbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--green)}
+.wbnames{font-weight:700;font-size:.86rem;margin-top:2px;color:var(--white)}
+.sets-c{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.set-row{background:rgba(0,0,0,.22);border-radius:6px;padding:9px 12px}
+.set-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:7px;font-weight:600}
+.set-scores{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px}
+.pcol{display:flex;flex-direction:column;gap:3px}
+.plbl{font-size:.57rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gray)}
+.pnames-sm{display:flex;gap:3px;flex-wrap:wrap}
+.pnsm{font-weight:600;font-size:.62rem;padding:1px 5px;border-radius:3px}
+.sbox{display:flex;flex-direction:column;align-items:center;gap:2px}
+.sinputs{display:flex;gap:5px;align-items:center}
+.si{width:50px;height:38px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.45rem;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--white);outline:none;-webkit-appearance:none;appearance:none}
+.si:focus{border-color:var(--gold)}
+.si.win{border-color:var(--green);background:rgba(82,183,136,.1)}
+.si.lose{border-color:rgba(230,57,70,.3)}
+.ssep{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gray);margin-top:14px}
+.snote{font-size:.6rem;color:var(--gray);text-align:center;margin-top:3px;opacity:.65}
+.mvp-row{background:rgba(0,0,0,.22);border-radius:6px;padding:9px 12px;margin-bottom:10px}
+.mvp-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:7px;font-weight:600}
+.mvp-opts{display:flex;gap:7px;flex-wrap:wrap}
+.mvpbtn{flex:1;min-width:58px;padding:6px 3px;border-radius:5px;border:1px solid var(--border);background:var(--bg);color:var(--gray2);font-size:.72rem;font-weight:600;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.mvpbtn.sel-rayco{background:#a8d8ea;color:#0a1a2a;border-color:transparent}
+.mvpbtn.sel-nico{background:#c9b1ff;color:#1a0a3a;border-color:transparent}
+.mvpbtn.sel-tana{background:#ffb4a2;color:#3a0a0a;border-color:transparent}
+.mvpbtn.sel-yeri{background:#95d5b2;color:#0a2a1a;border-color:transparent}
+.btn-save{width:100%;padding:10px;background:var(--gold);color:#0f1b0f;border:none;border-radius:7px;font-weight:700;font-size:.86rem;letter-spacing:.04em;cursor:pointer;margin-top:2px;-webkit-tap-highlight-color:transparent}
+.btn-save:active{opacity:.82}
+.btn-clear{width:100%;padding:7px;background:transparent;color:var(--gray);border:1px solid var(--border);border-radius:7px;font-size:.72rem;cursor:pointer;margin-top:6px;-webkit-tap-highlight-color:transparent}
+footer{text-align:center;margin-top:32px;font-size:.62rem;color:var(--border);letter-spacing:.08em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<header>
+  <div class="title">Liga Padel</div>
+  <div class="subtitle">Miercoles - 4 jugadores - 2026</div>
+  <div class="net"><div class="net-line"></div><div class="net-dot"></div><div class="net-line"></div><div class="net-dot"></div><div class="net-line"></div><div class="net-dot"></div><div class="net-line"></div></div>
+</header>
+<div class="players">
+  <div class="pbadge"><div class="pdot" style="background:#a8d8ea"></div>Rayco</div>
+  <div class="pbadge"><div class="pdot" style="background:#c9b1ff"></div>Nico</div>
+  <div class="pbadge"><div class="pdot" style="background:#ffb4a2"></div>Tana</div>
+  <div class="pbadge"><div class="pdot" style="background:#95d5b2"></div>Yeri</div>
+</div>
+<div class="scoreboard">
+  <div class="sb-title">Clasificacion acumulada</div>
+  <div class="sb-grid">
+    <div class="sb-player"><div class="sb-name">Rayco</div><div class="sb-wins" id="wr" style="color:#a8d8ea">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gfr">0</span>/<span class="sb-ga" id="gar">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdr">0</span></div><div class="sb-mvp" style="color:#a8d8ea">Mago:<span id="mr">0</span></div></div>
+    <div class="sb-player"><div class="sb-name">Nico</div><div class="sb-wins" id="wn" style="color:#c9b1ff">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gfn">0</span>/<span class="sb-ga" id="gan">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdn">0</span></div><div class="sb-mvp" style="color:#c9b1ff">Mago:<span id="mn">0</span></div></div>
+    <div class="sb-player"><div class="sb-name">Tana</div><div class="sb-wins" id="wt" style="color:#ffb4a2">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gft">0</span>/<span class="sb-ga" id="gat">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdt">0</span></div><div class="sb-mvp" style="color:#ffb4a2">Mago:<span id="mt">0</span></div></div>
+    <div class="sb-player"><div class="sb-name">Yeri</div><div class="sb-wins" id="wy" style="color:#95d5b2">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gfy">0</span>/<span class="sb-ga" id="gay">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdy">0</span></div><div class="sb-mvp" style="color:#95d5b2">Mago:<span id="my">0</span></div></div>
+  </div>
+</div>
+<div id="cbann"></div>
+<div class="rules-toggle"><button class="rules-btn" onclick="toggleRules()">Reglas de puntuacion</button></div>
+<div class="rules-box" id="rbox">
+  <h4>Reglas de padel</h4>
+  <ul>
+    <li>Cada set al mejor de 6 juegos (dif. min. 2).</li>
+    <li>Con 6-6 se juega tie-break a 7 puntos.</li>
+    <li>Se gana ganando 2 sets.</li>
+    <li>El 3er set es normal igual que los anteriores.</li>
+  </ul>
+</div>
+<div class="schedule" id="sch"></div>
+<footer>Liga Padel - Miercoles 2026</footer>
+</body>
+<script>
+
+
+
+/* ------------------------------------------------------------
+   1) DATOS BASE: jugadores, combinaciones de parejas y fechas
+   ------------------------------------------------------------ */
+
+/* Nombres de cada jugador, identificados por una clave corta */
+var PL={rayco:{n:'Rayco'},nico:{n:'Nico'},tana:{n:'Tana'},yeri:{n:'Yeri'}};
+/* Lista de claves, usada para recorrer los 4 jugadores en bucles */
+var PK=['rayco','nico','tana','yeri'];
+/* Las 3 combinaciones posibles de parejas (con 4 jugadores solo
+   existen estas 3 formas distintas de formar 2 parejas) */
+var CB=[
+  {a1:'rayco',a2:'nico',b1:'tana',b2:'yeri'},
+  {a1:'rayco',a2:'tana',b1:'nico',b2:'yeri'},
+  {a1:'rayco',a2:'yeri',b1:'nico',b2:'tana'}
+];
+/* WPC = semanas por ciclo (3 combinaciones x 2 repeticiones = 6)
+   CYC = numero de ciclos completos que se muestran (2 ciclos = 12 semanas)
+   SD  = fecha de la primera jornada (24 de junio de 2026) */
+var WPC=6,CYC=2,SD=new Date(2026,5,24);
+/* WW = array con las 12 jornadas. Cada elemento guarda: indice (i),
+   pareja de esa jornada (cb), a que ciclo pertenece (cy), si es
+   repeticion (r) y la fecha calculada (d). Se genera sumando 7 dias
+   por cada jornada a partir de la fecha de inicio (SD). */
+var WW=[];
+(function(){
+  for(var c=0;c<CYC;c++)for(var ci=0;ci<CB.length;ci++)for(var r=0;r<2;r++){
+    var d=new Date(SD);d.setDate(d.getDate()+WW.length*7);
+    WW.push({i:WW.length,cb:CB[ci],cy:c,r:r,d:d});
+  }
+}());
+
+/* ------------------------------------------------------------
+   2) CARGA DE DATOS GUARDADOS
+   Lee el contenido del <script id="d"> del head (var D=...) y lo
+   convierte de texto a objeto JavaScript. Si D es "null" (primera
+   vez que se abre el archivo, sin resultados), AD se queda vacio {}.
+   AD es el objeto que guarda TODOS los resultados de TODAS las
+   jornadas mientras usas la pagina (en memoria, antes de guardar).
+   ------------------------------------------------------------ */
+var AD={};
+(function(){
+  try{
+    var el=document.getElementById('d');
+    if(!el)return;
+    var t=(el.textContent||el.innerText||'').trim();
+    var eq=t.indexOf('=');if(eq<0)return;
+    var j=t.slice(eq+1).trim().replace(/;$/,'').trim();
+    if(j==='null'||j==='{}')return;
+    AD=JSON.parse(j);
+  }catch(e){AD={};}
+}());
+
+/* ------------------------------------------------------------
+   3) PLANTILLA PARA LA DESCARGA (variable P2)
+   Esta variable es una COPIA EXACTA de todo el CSS y el HTML fijo
+   de esta misma pagina, guardada como texto. Se usa SOLO cuando
+   pulsas "Guardar y descargar": la funcion dload() (mas abajo) la
+   junta con los resultados (en formato JSON) y con el propio
+   codigo JavaScript para construir el archivo nuevo que se descarga.
+
+   IMPORTANTE: si algun dia cambias el CSS o el HTML fijo de la
+   pagina (por ejemplo el bloque .btn-save de arriba), esta misma
+   cadena de texto deberia actualizarse tambien para que el archivo
+   descargado coincida visualmente con el original. No hace falta
+   entenderla letra por letra: es identica a lo que ya viste en el
+   <head> y <body> de este mismo archivo.
+   ------------------------------------------------------------ */
+var P2='<style>\n@import url(\'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap\');\n*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}\n:root{--gold:#e9c46a;--white:#f8f9fa;--gray:#6c757d;--gray2:#adb5bd;\n  --bg:#0f1b0f;--card:#162116;--border:#2a3d2a;--red:#e63946;--green:#52b788;--courtl:#2d6a4f}\nbody{font-family:\'Inter\',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;padding:18px 14px 50px}\nheader{text-align:center;margin-bottom:24px}\n.title{font-family:\'Bebas Neue\',sans-serif;font-size:clamp(2rem,8vw,3.4rem);letter-spacing:.08em;color:var(--gold);line-height:1}\n.subtitle{font-size:.72rem;color:var(--gray);letter-spacing:.14em;text-transform:uppercase;margin-top:4px}\n.net{display:flex;align-items:center;gap:8px;margin:14px auto 0;max-width:260px}\n.net-line{flex:1;height:1px;background:var(--border)}\n.net-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}\n.players{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}\n.pbadge{display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}\n.pdot{width:8px;height:8px;border-radius:50%}\n.scoreboard{max-width:600px;margin:0 auto 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}\n.sb-title{font-family:\'Bebas Neue\',sans-serif;font-size:1rem;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;text-align:center}\n.sb-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px}\n.sb-player{text-align:center}\n.sb-name{font-size:.62rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gray2);margin-bottom:3px}\n.sb-wins{font-family:\'Bebas Neue\',sans-serif;font-size:1.8rem;line-height:1}\n.sb-sub{font-size:.57rem;color:var(--gray);margin-top:1px}\n.sb-row{font-size:.57rem;margin-top:4px;color:var(--gray2)}\n.sb-row span{font-weight:700}\n.sb-gf{color:var(--green)}.sb-ga{color:var(--red)}.sb-diff{color:var(--gold)}\n.sb-mvp{font-size:.57rem;margin-top:2px}\n.cycle-banner{max-width:600px;margin:0 auto 8px;background:rgba(233,196,106,.08);border:1px solid rgba(233,196,106,.3);border-radius:8px;padding:8px 14px;text-align:center}\n.cb-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold)}\n.cb-name{font-family:\'Bebas Neue\',sans-serif;font-size:1.3rem;color:var(--white);margin-top:1px;letter-spacing:.05em}\n.cb-detail{font-size:.62rem;color:var(--gray2);margin-top:1px}\n.rules-toggle{text-align:center;margin:10px auto 18px;max-width:600px}\n.rules-btn{background:transparent;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:.68rem;color:var(--gray);cursor:pointer;letter-spacing:.07em;text-transform:uppercase}\n.rules-box{display:none;max-width:600px;margin:0 auto 18px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:.72rem;line-height:1.6;color:var(--gray2)}\n.rules-box.show{display:block}\n.rules-box h4{color:var(--gold);font-size:.74rem;margin-bottom:5px;letter-spacing:.05em;text-transform:uppercase}\n.rules-box ul{padding-left:14px;margin-bottom:6px}\n.rules-box li{margin-bottom:2px}\n.schedule{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:7px}\n.cycle-sep{max-width:600px;margin:4px auto 0;display:flex;align-items:center;gap:8px}\n.cycle-sep-line{flex:1;height:1px;background:var(--border)}\n.cycle-sep-lbl{font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;background:var(--bg);padding:0 5px}\n.jornada{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden}\n.jornada.played{border-color:var(--courtl)}\n.jornada.played .jh{background:rgba(45,106,79,.15)}\n.jh{display:grid;grid-template-columns:68px 1fr auto;align-items:center;gap:7px;padding:11px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}\n.jh:active{background:rgba(233,196,106,.06)}\n.jweek{display:flex;flex-direction:column;gap:1px}\n.jnum{font-family:\'Bebas Neue\',sans-serif;font-size:1.2rem;color:var(--gold);line-height:1}\n.jdate{font-size:.62rem;color:var(--gray);white-space:nowrap}\n.jrep{font-size:.56rem;color:var(--gray);margin-top:1px}\n.jmatch{display:flex;align-items:center;gap:5px;flex-wrap:wrap}\n.pn{font-weight:600;font-size:.74rem;padding:2px 6px;border-radius:4px;white-space:nowrap}\n.pn.rayco{background:#1d3557;color:#a8d8ea}\n.pn.nico{background:#2d1b4e;color:#c9b1ff}\n.pn.tana{background:#4a1a1a;color:#ffb4a2}\n.pn.yeri{background:#1a3a1a;color:#95d5b2}\n.vs{font-family:\'Bebas Neue\',sans-serif;font-size:.85rem;color:var(--gold);background:rgba(233,196,106,.1);border:1px solid rgba(233,196,106,.22);border-radius:3px;padding:2px 5px}\n.jstatus{display:flex;flex-direction:column;align-items:center;gap:2px}\n.sdot{width:7px;height:7px;border-radius:50%;background:var(--border)}\n.jornada.played .sdot{background:var(--green)}\n.chev{font-size:.75rem;color:var(--gray);transition:transform .22s;display:inline-block}\n.jornada.open .chev{transform:rotate(180deg)}\n.jpanel{display:none;border-top:1px solid var(--border);padding:14px}\n.jornada.open .jpanel{display:block}\n.wbanner{display:none;background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.3);border-radius:6px;padding:7px 12px;text-align:center;margin-bottom:10px}\n.wbanner.show{display:block}\n.wblbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--green)}\n.wbnames{font-weight:700;font-size:.86rem;margin-top:2px;color:var(--white)}\n.sets-c{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}\n.set-row{background:rgba(0,0,0,.22);border-radius:6px;padding:9px 12px}\n.set-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:7px;font-weight:600}\n.set-scores{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px}\n.pcol{display:flex;flex-direction:column;gap:3px}\n.plbl{font-size:.57rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gray)}\n.pnames-sm{display:flex;gap:3px;flex-wrap:wrap}\n.pnsm{font-weight:600;font-size:.62rem;padding:1px 5px;border-radius:3px}\n.sbox{display:flex;flex-direction:column;align-items:center;gap:2px}\n.sinputs{display:flex;gap:5px;align-items:center}\n.si{width:50px;height:38px;text-align:center;font-family:\'Bebas Neue\',sans-serif;font-size:1.45rem;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--white);outline:none;-webkit-appearance:none;appearance:none}\n.si:focus{border-color:var(--gold)}\n.si.win{border-color:var(--green);background:rgba(82,183,136,.1)}\n.si.lose{border-color:rgba(230,57,70,.3)}\n.ssep{font-family:\'Bebas Neue\',sans-serif;font-size:1rem;color:var(--gray);margin-top:14px}\n.snote{font-size:.6rem;color:var(--gray);text-align:center;margin-top:3px;opacity:.65}\n.mvp-row{background:rgba(0,0,0,.22);border-radius:6px;padding:9px 12px;margin-bottom:10px}\n.mvp-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:7px;font-weight:600}\n.mvp-opts{display:flex;gap:7px;flex-wrap:wrap}\n.mvpbtn{flex:1;min-width:58px;padding:6px 3px;border-radius:5px;border:1px solid var(--border);background:var(--bg);color:var(--gray2);font-size:.72rem;font-weight:600;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}\n.mvpbtn.sel-rayco{background:#a8d8ea;color:#0a1a2a;border-color:transparent}\n.mvpbtn.sel-nico{background:#c9b1ff;color:#1a0a3a;border-color:transparent}\n.mvpbtn.sel-tana{background:#ffb4a2;color:#3a0a0a;border-color:transparent}\n.mvpbtn.sel-yeri{background:#95d5b2;color:#0a2a1a;border-color:transparent}\n.btn-save{width:100%;padding:10px;background:var(--gold);color:#0f1b0f;border:none;border-radius:7px;font-weight:700;font-size:.86rem;letter-spacing:.04em;cursor:pointer;margin-top:2px;-webkit-tap-highlight-color:transparent}\n.btn-save:active{opacity:.82}\n.btn-clear{width:100%;padding:7px;background:transparent;color:var(--gray);border:1px solid var(--border);border-radius:7px;font-size:.72rem;cursor:pointer;margin-top:6px;-webkit-tap-highlight-color:transparent}\nfooter{text-align:center;margin-top:32px;font-size:.62rem;color:var(--border);letter-spacing:.08em;text-transform:uppercase}\n</style>\n</head>\n<body>\n<header>\n  <div class="title">Liga Padel</div>\n  <div class="subtitle">Miercoles - 4 jugadores - 2026</div>\n  <div class="net"><div class="net-line"></div><div class="net-dot"></div><div class="net-line"></div><div class="net-dot"></div><div class="net-line"></div><div class="net-dot"></div><div class="net-line"></div></div>\n</header>\n<div class="players">\n  <div class="pbadge"><div class="pdot" style="background:#a8d8ea"></div>Rayco</div>\n  <div class="pbadge"><div class="pdot" style="background:#c9b1ff"></div>Nico</div>\n  <div class="pbadge"><div class="pdot" style="background:#ffb4a2"></div>Tana</div>\n  <div class="pbadge"><div class="pdot" style="background:#95d5b2"></div>Yeri</div>\n</div>\n<div class="scoreboard">\n  <div class="sb-title">Clasificacion acumulada</div>\n  <div class="sb-grid">\n    <div class="sb-player"><div class="sb-name">Rayco</div><div class="sb-wins" id="wr" style="color:#a8d8ea">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gfr">0</span>/<span class="sb-ga" id="gar">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdr">0</span></div><div class="sb-mvp" style="color:#a8d8ea">Mago:<span id="mr">0</span></div></div>\n    <div class="sb-player"><div class="sb-name">Nico</div><div class="sb-wins" id="wn" style="color:#c9b1ff">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gfn">0</span>/<span class="sb-ga" id="gan">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdn">0</span></div><div class="sb-mvp" style="color:#c9b1ff">Mago:<span id="mn">0</span></div></div>\n    <div class="sb-player"><div class="sb-name">Tana</div><div class="sb-wins" id="wt" style="color:#ffb4a2">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gft">0</span>/<span class="sb-ga" id="gat">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdt">0</span></div><div class="sb-mvp" style="color:#ffb4a2">Mago:<span id="mt">0</span></div></div>\n    <div class="sb-player"><div class="sb-name">Yeri</div><div class="sb-wins" id="wy" style="color:#95d5b2">0</div><div class="sb-sub">victorias</div><div class="sb-row"><span class="sb-gf" id="gfy">0</span>/<span class="sb-ga" id="gay">0</span></div><div class="sb-row">Dif:<span class="sb-diff" id="gdy">0</span></div><div class="sb-mvp" style="color:#95d5b2">Mago:<span id="my">0</span></div></div>\n  </div>\n</div>\n<div id="cbann"></div>\n<div class="rules-toggle"><button class="rules-btn" onclick="toggleRules()">Reglas de puntuacion</button></div>\n<div class="rules-box" id="rbox">\n  <h4>Reglas de padel</h4>\n  <ul>\n    <li>Cada set al mejor de 6 juegos (dif. min. 2).</li>\n    <li>Con 6-6 se juega tie-break a 7 puntos.</li>\n    <li>Se gana ganando 2 sets.</li>\n    <li>El 3er set es normal igual que los anteriores.</li>\n  </ul>\n</div>\n<div class="schedule" id="sch"></div>\n<footer>Liga Padel - Miercoles 2026</footer>\n</body>\n';
+
+/* ------------------------------------------------------------
+   4) FUNCIONES AUXILIARES PEQUENAS
+   ------------------------------------------------------------ */
+/* fd  = formatea una fecha como dd/mm/aaaa para mostrarla */
+function fd(d){return d.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});}
+/* ffd = fecha de HOY en formato ddmmaaaa, para el nombre del archivo descargado */
+function ffd(){var d=new Date();return('0'+d.getDate()).slice(-2)+('0'+(d.getMonth()+1)).slice(-2)+d.getFullYear();}
+/* pn = genera la etiqueta HTML con el nombre de un jugador (con su color) */
+function pn(k,sm){return '<span class="'+(sm?'pnsm ':'pn ')+k+'">'+PL[k].n+'</span>';}
+
+/* ------------------------------------------------------------
+   5) CONSTRUCCION DE CADA TARJETA DE JORNADA (S1, S2... S12)
+   Esta funcion crea TODO el HTML de una jornada: cabecera plegable,
+   los 3 cuadros de sets, el selector de "mago del partido" y los
+   2 botones (Guardar y descargar / Borrar jornada).
+   Se llama una vez por cada una de las 12 jornadas (ver rAll mas abajo).
+   ------------------------------------------------------------ */
+function buildCard(w){
+  var i=w.i,cb=w.cb,sv=AD[i]||{};
+  var sets=sv.sets||[{a:'',b:''},{a:'',b:''},{a:'',b:''}];
+  var mvp=sv.mvp||'',win=sv.winner||'',played=sv.played||false;
+  var pAh=pn(cb.a1,false)+' '+pn(cb.a2,false);
+  var pBh=pn(cb.b1,false)+' '+pn(cb.b2,false);
+  var pAs='<div class="pnames-sm">'+pn(cb.a1,true)+pn(cb.a2,true)+'</div>';
+  var pBs='<div class="pnames-sm">'+pn(cb.b1,true)+pn(cb.b2,true)+'</div>';
+  function sr(si,lbl){
+    var va=sets[si]?String(sets[si].a):'',vb=sets[si]?String(sets[si].b):'';
+    var na=parseInt(va),nb=parseInt(vb),ca='',cb2='';
+    if(va!==''&&vb!==''&&!isNaN(na)&&!isNaN(nb)){
+      if(na>nb){ca=' win';cb2=' lose';}else if(nb>na){ca=' lose';cb2=' win';}
+    }
+    return '<div class="set-row"><div class="set-lbl">'+lbl+'</div>'+
+      '<div class="set-scores">'+
+        '<div class="pcol"><div class="plbl">Pareja A</div>'+pAs+'</div>'+
+        '<div class="sbox"><div class="sinputs">'+
+          '<input class="si'+ca+'" id="s'+i+'-'+si+'-a" type="number" min="0" max="99" value="'+va+'" oninput="oI('+i+','+si+')">'+
+          '<span class="ssep">-</span>'+
+          '<input class="si'+cb2+'" id="s'+i+'-'+si+'-b" type="number" min="0" max="99" value="'+vb+'" oninput="oI('+i+','+si+')">'+
+        '</div><div class="snote">Max 7 tie-break si 6-6</div></div>'+
+        '<div class="pcol" style="align-items:flex-end"><div class="plbl" style="text-align:right">Pareja B</div>'+pBs+'</div>'+
+      '</div></div>';
+  }
+  function mb(k){
+    var sel=(mvp===k)?' sel-'+k:'';
+    return '<button class="mvpbtn'+sel+'" id="mb'+i+'-'+k+'" onclick="sMvp('+i+",'"+k+"'"+')">'+(PL[k]?PL[k].n:k)+'</button>';
+  }
+  var html=
+    '<div class="jh" onclick="tC('+i+')">'+
+      '<div class="jweek"><div class="jnum">S'+(i+1)+'</div>'+
+        '<div class="jdate">'+fd(w.d)+'</div>'+
+        (w.r===1?'<div class="jrep">repeticion</div>':'')+
+      '</div>'+
+      '<div class="jmatch">'+pAh+'<span class="vs">VS</span>'+pBh+'</div>'+
+      '<div class="jstatus"><div class="sdot"></div><span class="chev">&#9660;</span></div>'+
+    '</div>'+
+    '<div class="jpanel">'+
+      '<div class="wbanner'+(win?' show':'')+'" id="wb'+i+'">'+
+        '<div class="wblbl">Ganadores</div>'+
+        '<div class="wbnames" id="wbn'+i+'">'+win+'</div>'+
+      '</div>'+
+      '<div class="sets-c">'+sr(0,'1er Set')+sr(1,'2o Set')+sr(2,'3er Set')+'</div>'+
+      '<div class="mvp-row"><div class="mvp-lbl">Mago del partido</div>'+
+        '<div class="mvp-opts">'+mb(cb.a1)+mb(cb.a2)+mb(cb.b1)+mb(cb.b2)+'</div>'+
+      '</div>'+
+      /* ----------------------------------------------------------
+         BOTON "GUARDAR Y DESCARGAR" - linea de abajo.
+         Para DESHABILITARLO (que se vea gris y no se pueda pulsar,
+         sin quitarlo de la pantalla), anade el atributo "disabled"
+         dentro de las comillas del <button>, asi:
+
+         '<button class="btn-save" disabled onclick="sR('+i+')">Guardar y descargar</button>'+
+
+         Si ademas anadiste la regla CSS .btn-save:disabled (ver el
+         comentario en la seccion <style> de mas arriba), el boton
+         se mostrara atenuado y con el cursor de "no permitido".
+         Para volver a activarlo, simplemente quita la palabra
+         "disabled" de esta linea.
+         ---------------------------------------------------------- */
+      '<button class="btn-save" onclick="sR('+i+')">Guardar y descargar</button>'+
+      '<button class="btn-clear" onclick="cR('+i+')">Borrar jornada</button>'+
+    '</div>';
+  var div=document.createElement('div');
+  div.className='jornada'+(played?' played':'');
+  div.id='j'+i;
+  div.innerHTML=html;
+  return div;
+}
+
+/* ------------------------------------------------------------
+   6) rAll = "Render All" - pinta TODAS las jornadas en pantalla
+   Vacia el contenedor #sch y vuelve a construir las 12 tarjetas
+   desde cero (con buildCard), insertando ademas el separador
+   "Ciclo 1 / Ciclo 2" cada 6 jornadas. Se llama al abrir la pagina
+   y cada vez que se borra una jornada (cR).
+   ------------------------------------------------------------ */
+function rAll(){
+  var el=document.getElementById('sch');if(!el)return;el.innerHTML='';
+  for(var i=0;i<WW.length;i++){
+    if(i>0&&i%WPC===0){
+      var sep=document.createElement('div');sep.className='cycle-sep';
+      sep.innerHTML='<div class="cycle-sep-line"></div><div class="cycle-sep-lbl">Ciclo '+(Math.floor(i/WPC)+1)+'</div><div class="cycle-sep-line"></div>';
+      el.appendChild(sep);
+    }
+    el.appendChild(buildCard(WW[i]));
+  }
+  uSB();
+}
+/* tC = "Toggle Card" - abre o cierra el desplegable de una jornada */
+function tC(i){var c=document.getElementById('j'+i);if(!c)return;c.classList.contains('open')?c.classList.remove('open'):c.classList.add('open');}
+/* oI = "On Input" - se ejecuta cada vez que escribes un numero en
+   una casilla de set. Solo sirve para pintar en verde/rojo quien
+   va ganando ese set mientras escribes (no guarda nada todavia,
+   eso solo ocurre al pulsar "Guardar y descargar"). */
+function oI(i,si){
+  var a=document.getElementById('s'+i+'-'+si+'-a'),b=document.getElementById('s'+i+'-'+si+'-b');
+  if(!a||!b)return;
+  a.classList.remove('win','lose');b.classList.remove('win','lose');
+  var na=parseInt(a.value),nb=parseInt(b.value);
+  if(!isNaN(na)&&!isNaN(nb)&&a.value!==''&&b.value!==''){
+    if(na>nb){a.classList.add('win');b.classList.add('lose');}
+    else if(nb>na){a.classList.add('lose');b.classList.add('win');}
+  }
+}
+/* sMvp = "Set MVP" - guarda temporalmente (hasta que pulses guardar)
+   que jugador ha sido elegido como "mago del partido" de esa jornada */
+function sMvp(i,k){
+  var cb=WW[i].cb,ps=[cb.a1,cb.a2,cb.b1,cb.b2];
+  for(var x=0;x<ps.length;x++){var btn=document.getElementById('mb'+i+'-'+ps[x]);if(btn){btn.className='mvpbtn'+(ps[x]===k?' sel-'+k:'');}}
+  var card=document.getElementById('j'+i);if(card)card.dataset.mvp=k;
+}
+/* ------------------------------------------------------------
+   7) sR = "Save Result" - boton "Guardar y descargar"
+   Esta es la funcion mas importante: lee los 3 sets de la jornada,
+   calcula quien gano (el primero en ganar 2 sets), guarda todo en
+   el objeto AD (en memoria), actualiza el marcador en pantalla y
+   por ultimo llama a dload() para generar y descargar el archivo.
+   ------------------------------------------------------------ */
+function sR(i){
+  var cb=WW[i].cb,sets=[],wA=0,wB=0;
+  for(var si=0;si<3;si++){
+    var ea=document.getElementById('s'+i+'-'+si+'-a'),eb=document.getElementById('s'+i+'-'+si+'-b');
+    var a=ea?ea.value.trim():'',b=eb?eb.value.trim():'';
+    sets.push({a:a,b:b});
+    if(a!==''&&b!==''){var na=parseInt(a),nb=parseInt(b);if(!isNaN(na)&&!isNaN(nb)){if(na>nb)wA++;else if(nb>na)wB++;}}
+  }
+  var winner='';
+  if(wA>=2)winner=PL[cb.a1].n+' y '+PL[cb.a2].n;
+  else if(wB>=2)winner=PL[cb.b1].n+' y '+PL[cb.b2].n;
+  var card=document.getElementById('j'+i);
+  var mvp=(card&&card.dataset.mvp)?card.dataset.mvp:(AD[i]?AD[i].mvp||'':'');
+  AD[i]={sets:sets,winner:winner,mvp:mvp,played:(wA>=2||wB>=2)};
+  var wb=document.getElementById('wb'+i),wbn=document.getElementById('wbn'+i);
+  if(wb&&wbn){wbn.textContent=winner;winner?wb.classList.add('show'):wb.classList.remove('show');}
+  if(card){AD[i].played?card.classList.add('played'):card.classList.remove('played');}
+  uSB();dload();
+  if(card){var btn=card.querySelector('.btn-save');if(btn){btn.textContent='Guardado!';setTimeout(function(){btn.textContent='Guardar y descargar';},2000);}}
+}
+/* cR = "Clear Result" - boton "Borrar jornada". Pide confirmacion,
+   borra los datos de esa jornada del objeto AD y vuelve a pintar
+   todo (rAll). OJO: esto solo borra en la pantalla actual, no
+   descarga ningun archivo; si quieres que el cambio quede guardado
+   tendrias que rellenar de nuevo y pulsar "Guardar y descargar". */
+function cR(i){
+  if(!confirm('Borrar resultado?'))return;
+  delete AD[i];rAll();
+  var c=document.getElementById('j'+i);if(c)c.classList.add('open');
+}
+/* ------------------------------------------------------------
+   8) dload = "Download" - genera el archivo .html nuevo
+   Construye el archivo completo juntando 3 piezas:
+     a) la cabecera con el tag de datos <script id="d"> relleno
+        con el JSON de AD (todos los resultados de momento)
+     b) P2 = el CSS y el HTML fijo (definidos arriba, variable P2)
+     c) el propio codigo JavaScript de esta pagina, leido con
+        document.getElementsByTagName('scr'+'ipt') para que el
+        archivo descargado tenga todas estas mismas funciones y
+        pueda, a su vez, volver a guardar mas jornadas en el futuro.
+   Al final intenta descargar con Blob (funciona en Android/Chrome)
+   y si falla usa un metodo alternativo con "data:" (mas compatible
+   con iPhone/Safari).
+   ------------------------------------------------------------ */
+function dload(){
+  var json=JSON.stringify(AD);
+  // Build downloaded file:
+  // head with datos script containing data + style + body + this script block
+  var sc='scr'+'ipt';
+  var scOpen='<'+sc+'>';
+  var scOpenD='<'+sc+' id="d">';
+  var scClose='</'+sc+'>';
+  // Get own JS source
+  var tags=document.getElementsByTagName(sc);
+  var myJS=tags[tags.length-1].textContent||tags[tags.length-1].innerText||'';
+  // Assemble: DOCTYPE + head with datos(json) + style + body + script(myJS) + /html
+  var head='<!DOCTYPE html>\n<html lang="es">\n<head>\n'+
+    '<meta charset="UTF-8">\n'+
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'+
+    '<title>Liga Padel 2026</title>\n'+
+    scOpenD+'var D='+json+';'+scClose+'\n';
+  var html=head+P2+scOpen+'\n'+myJS+'\n'+scClose+'\n</html>\n';
+  var fn='padel_'+ffd()+'.html';
+  try{
+    var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;a.download=fn;a.style.display='none';
+    document.body.appendChild(a);a.click();
+    setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},2000);
+    return;
+  }catch(e1){}
+  try{
+    var uri='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+    var a2=document.createElement('a');
+    a2.href=uri;a2.download=fn;a2.style.display='none';
+    document.body.appendChild(a2);a2.click();
+    setTimeout(function(){document.body.removeChild(a2);},2000);
+  }catch(e2){alert('Error al descargar: '+e2);}
+}
+/* ------------------------------------------------------------
+   9) uSB = "Update ScoreBoard" - recalcula y pinta el marcador
+   Recorre las 12 jornadas y, por cada una que tenga resultado
+   guardado, suma victorias, juegos a favor/en contra y votos de
+   "mago del partido" para cada jugador (de forma individual,
+   aunque el padel se juegue en parejas). Tambien calcula el
+   campeon de cada ciclo si las 6 jornadas de ese ciclo ya se
+   jugaron, y muestra el cartel correspondiente.
+   Se llama automaticamente cada vez que abres la pagina, guardas
+   o borras un resultado.
+   ------------------------------------------------------------ */
+function uSB(){
+  var wins={rayco:0,nico:0,tana:0,yeri:0},gf={rayco:0,nico:0,tana:0,yeri:0};
+  var ga={rayco:0,nico:0,tana:0,yeri:0},mvps={rayco:0,nico:0,tana:0,yeri:0};
+  var cs=[];for(var c=0;c<CYC;c++)cs.push({w:{rayco:0,nico:0,tana:0,yeri:0},gd:{rayco:0,nico:0,tana:0,yeri:0},ok:true});
+  for(var i=0;i<WW.length;i++){
+    var w=WW[i],sv=AD[i],cb=w.cb,cy=w.cy;
+    if(!sv||!sv.played){cs[cy].ok=false;continue;}
+    var pAN=PL[cb.a1].n+' y '+PL[cb.a2].n,isA=(sv.winner===pAN);
+    if(isA){wins[cb.a1]++;wins[cb.a2]++;cs[cy].w[cb.a1]++;cs[cy].w[cb.a2]++;}
+    else if(sv.winner){wins[cb.b1]++;wins[cb.b2]++;cs[cy].w[cb.b1]++;cs[cy].w[cb.b2]++;}
+    var ss=sv.sets||[];
+    for(var si=0;si<ss.length;si++){
+      var sa=parseInt(ss[si].a),sb=parseInt(ss[si].b);
+      if(isNaN(sa)||isNaN(sb)||ss[si].a===''||ss[si].b==='')continue;
+      gf[cb.a1]+=sa;ga[cb.a1]+=sb;gf[cb.a2]+=sa;ga[cb.a2]+=sb;
+      gf[cb.b1]+=sb;ga[cb.b1]+=sa;gf[cb.b2]+=sb;ga[cb.b2]+=sa;
+      cs[cy].gd[cb.a1]+=(sa-sb);cs[cy].gd[cb.a2]+=(sa-sb);
+      cs[cy].gd[cb.b1]+=(sb-sa);cs[cy].gd[cb.b2]+=(sb-sa);
+    }
+    if(sv.mvp&&mvps[sv.mvp]!==undefined)mvps[sv.mvp]++;
+  }
+  var ids={rayco:['wr','gfr','gar','gdr','mr'],nico:['wn','gfn','gan','gdn','mn'],tana:['wt','gft','gat','gdt','mt'],yeri:['wy','gfy','gay','gdy','my']};
+  for(var j=0;j<PK.length;j++){
+    var k=PK[j],gd=gf[k]-ga[k],id=ids[k];
+    function se(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+    se(id[0],wins[k]);se(id[1],gf[k]);se(id[2],ga[k]);se(id[3],(gd>0?'+':'')+gd);se(id[4],mvps[k]);
+  }
+  var cbb=document.getElementById('cbann');if(!cbb)return;cbb.innerHTML='';
+  for(var c=0;c<cs.length;c++){
+    var cst=cs[c];if(!cst.ok)continue;
+    var best=null,bW=-1,bD=-9999,tied=false;
+    for(var j=0;j<PK.length;j++){var k=PK[j],ww=cst.w[k],dd=cst.gd[k];
+      if(ww>bW||(ww===bW&&dd>bD)){best=k;bW=ww;bD=dd;tied=false;}
+      else if(k!==best&&ww===bW&&dd===bD)tied=true;
+    }
+    var bn=document.createElement('div');bn.className='cycle-banner';
+    bn.innerHTML='<div class="cb-label">Campeon Ciclo '+(c+1)+'</div>'+
+      '<div class="cb-name">'+(tied?'Empate':PL[best].n)+'</div>'+
+      '<div class="cb-detail">'+bW+' victorias dif: '+(bD>=0?'+':'')+bD+'</div>';
+    cbb.appendChild(bn);
+  }
+}
+/* toggleRules = abre/cierra el cuadro de "Reglas de puntuacion" */
+function toggleRules(){var r=document.getElementById('rbox');if(r)r.classList.contains('show')?r.classList.remove('show'):r.classList.add('show');}
+
+/* ------------------------------------------------------------
+   10) init = arranque de la pagina
+   Pinta todas las jornadas (rAll) y luego busca la primera
+   jornada SIN jugar para dejarla abierta automaticamente al
+   cargar la pagina (asi sabes siempre cual es la siguiente).
+   ------------------------------------------------------------ */
+function init(){
+  rAll();
+  for(var i=0;i<WW.length;i++){if(!AD[i]||!AD[i].played){var fc=document.getElementById('j'+i);if(fc)fc.classList.add('open');break;}}
+}
+/* Llama a init() cuando el documento este listo. Si el script se
+   ejecuta antes de que el HTML termine de cargar, espera al evento
+   DOMContentLoaded; si ya esta cargado, lo ejecuta directamente. */
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+
+
+
+
+</script>
+</html>
